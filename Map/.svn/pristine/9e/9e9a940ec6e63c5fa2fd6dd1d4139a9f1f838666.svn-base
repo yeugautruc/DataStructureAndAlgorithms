@@ -1,0 +1,77 @@
+package de.ostfalia.algo.ws19.base;
+
+public class Member implements IMember {
+	private long key = 0;
+	private String name;
+	private String firstName;
+	private String date;
+	private Gender gender;
+	private KindOfSport sport;
+	private String keyString;
+
+	public Member(String input) {
+		String[] result = input.split(", ");
+		this.name = result[0].trim();
+		this.firstName = result[1].trim();
+		this.date = result[2].trim();
+		String genderStr = result[3].trim();
+		String sportStr = result[4].trim();
+		this.gender = Gender.valueOf(genderStr);
+		this.sport = KindOfSport.valueOf(sportStr);
+		/*
+		 * key = "name + first name + day + month + year"
+		 */
+		int intName = name.charAt(0) - 40;
+		int intFirstName = firstName.charAt(0) - 40;
+		String year = date.substring(0, 3);
+		String month = date.substring(5, 6);
+		String day = date.substring(8, 9);
+		if (intName < 10)
+			this.keyString = "0" + intName + intFirstName + day + month + year;
+		else
+			this.keyString = "" + intName + intFirstName + day + month + year;
+		this.key = Integer.parseInt(this.keyString);
+	}
+
+	@Override
+	public int compareTo(IMember o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getKey() {
+		// TODO Auto-generated method stub
+		return key;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+
+	@Override
+	public String getFirstName() {
+		// TODO Auto-generated method stub
+		return firstName;
+	}
+
+	@Override
+	public Gender getGender() {
+		// TODO Auto-generated method stub
+		return gender;
+	}
+
+	@Override
+	public LocalDate getDate() {
+		// TODO Auto-generated method stub
+		return date;
+	}
+
+	@Override
+	public KindOfSport getKindOfSport() {
+		// TODO Auto-generated method stub
+		return sport;
+	}
+}

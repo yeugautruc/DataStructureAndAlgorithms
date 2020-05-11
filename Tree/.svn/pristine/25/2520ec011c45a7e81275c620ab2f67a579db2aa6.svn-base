@@ -1,0 +1,99 @@
+package de.ostfalia.algo.ws19.s1;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+import de.ostfalia.algo.ws19.base.IManagement;
+import de.ostfalia.algo.ws19.base.IMember;
+import de.ostfalia.algo.ws19.base.KindOfSport;
+import de.ostfalia.algo.ws19.base.Member;
+
+public class Management implements IManagement {
+	Node header;
+	int operationCounter = 0;
+
+	public Management(String fileName) throws IOException {
+		File file = new File(fileName);
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		String line;
+		while ((line = br.readLine()) != null) {
+			Member newM = new Member(line);
+			long startTime = System.currentTimeMillis();
+			this.insert(newM);
+			long totalTime = System.currentTimeMillis() - startTime;
+			System.out.println(totalTime);// need to save in 1 table
+		}
+		br.close();
+		fr.close();
+	}
+
+	@Override
+	public int size() {
+		Node temp = header;
+		int output = 0;
+		while (temp.getNext() != null)
+			output++;
+		return output;
+	}
+
+	@Override
+	public void insert(IMember member) {
+		Node temp = header;
+		header = new Node(member, temp);
+
+	}
+
+	@Override
+	public IMember search(long key) {
+		Node temp = header;
+		while (temp != null && temp.getMember().getKey() != key)
+			temp.getNext();
+		if (temp == null)
+			return null;
+		else
+			return temp.getMember();
+	}
+
+	@Override
+	public IMember search(String name, String firstName) {
+		Node temp = header;
+		while (temp != null) {
+			if (temp.getMember().getName() == name && temp.getMember().getFirstName() == firstName)
+				return temp.getMember();
+		}
+		return null;
+	}
+
+	@Override
+	public int size(KindOfSport kindOfSport) {
+		int output = 0;
+		Node temp = header;
+		while (temp != null) {
+			if (temp.getMember().getKindOfSport() == kindOfSport)
+				output++;
+			temp.getNext();
+		}
+		return output;
+	}
+
+	@Override
+	public IMember[] discipline(KindOfSport kindOfSport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IMember[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int numberOfOperations() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

@@ -1,0 +1,87 @@
+package de.ostfalia.algo.ws19.s1;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.ostfalia.algo.ws19.base.IManagement;
+import de.ostfalia.algo.ws19.base.IMember;
+import de.ostfalia.algo.ws19.base.KindOfSport;
+import de.ostfalia.algo.ws19.base.Member;
+
+public class Management implements IManagement {
+	public List<Member> sportClub = new ArrayList<>();
+
+	public Management(String fileName) throws IOException {
+		File file = new File(fileName);
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		String line;
+		while ((line = br.readLine()) != null) {
+			Member newM = new Member(line);
+			long startTime = System.currentTimeMillis();
+			sportClub.add(newM);
+			long endTime   = System.currentTimeMillis();
+			long totalTime = endTime - startTime;
+			System.out.println(totalTime);//need to save in 1 table
+		}
+		br.close();
+		fr.close();
+	}
+
+	@Override
+	public int size() {
+		return sportClub.size();
+	}
+
+	@Override
+	public void insert(IMember member) {
+		sportClub.add(member);
+
+	}
+
+	@Override
+	public IMember search(long key) {
+		for (Member memS : sportClub) {
+			if (memS.getKey() == key)
+				return memS;
+		}
+		return null;
+	}
+
+	@Override
+	public IMember search(String name, String firstName) {
+		for (Member memS : sportClub) {
+			if (memS.getName() == name && memS.getFirstName() == name)
+				return memS;
+		}
+		return null;
+	}
+
+	@Override
+	public int size(KindOfSport kindOfSport) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public IMember[] discipline(KindOfSport kindOfSport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IMember[] toArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int numberOfOperations() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}
